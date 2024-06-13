@@ -1,7 +1,9 @@
 #ifndef SWITCH_HANDLER
 #define SWITCH_HANDLER
 
-// Struct to describe the current state of all the buttons and switches
+/*
+  Struct to combine the current states of buttons and switches. 
+*/
 struct SwitchStates {
   // Buttons 1-4
   bool btn1;
@@ -14,8 +16,9 @@ struct SwitchStates {
 };
 
 
-// Class to handle reading and reporting the button and switch states
-
+/*
+  Class handles reading and reporting the status of buttons and switches
+*/
 class SwitchHandler {
 
   public:
@@ -26,12 +29,15 @@ class SwitchHandler {
 
     // Reads the button and switch states and saves them to a struct
     void read();
+
+    // Returns the struct telling button statuses
     struct SwitchStates* get(); 
     
   
   private:
     struct SwitchStates currentStates;
 
+    // Arduino pins of buttons and switches
     int btn1_pin;
     int btn2_pin;
     int btn3_pin;

@@ -1,8 +1,17 @@
+#ifndef BUTTON_MODULE
+#define BUTTON_MODULE
+
 #include "switch_handler.h"
 #include "RGB_handler.h"
 #include "blinker_handler.h"
-#include "Arduino.h"
+#include "feedback_handler.h"
+#include "button_module.h"
 
+
+/*
+  Game module.
+  Player holds down button 4, reads the ccolor of RGB led, and releases the button when a correct blinker LED is on.
+*/
 class ButtonModule {
 
   public:
@@ -11,26 +20,35 @@ class ButtonModule {
     ButtonModule();
     ~ButtonModule();
 
-    // Main function: runs through
-    bool run(SwitchState* switchState, RGBHandler* rgbHandler, BlinkerHandler* blinkerHandler);
+    // Main function
+    int run(SwitchStates* switchState, RGBHandler* rgbHandler, BlinkerHandler* blinkerHandler);
 
+    // Returns if this module has been succesfully completed or not
     bool isCompleted() {return completed;}
 
   
   private:
 
-    // If the module has been successfully completed
-    bool completed = false;
+    // Configuration
+    unsigned long switchDuration = 1200;  // Duration a single LED stays on before changing
 
-    // How many successes this module currently holds, and how many are needed to complete the module
-    int successCount = 0;
-    const int maxSuccessCount = 3;
+    // Member methods to help set the LEDs correctly
+    void setBlinkers(BlinkerHandler* blnk);
+    void setRGB(RGBHandler* rgb);
 
-    bool buttonPressed = false;
-    unsigned long lastSwitch = 0;
+    // Defaults
+    int maxSuccessCount   = 3;                 // Pelase don't change this, the code doesn't currently allow more rounds
+    Color rgbColors[3]    = {purple,red,blue}; // Color of RGB in the three rounds
+    int correctAnswers[3] = {2,1,1};           // Correct LED indexes to release the button 
 
 
-    int firstTask_currentLight = 0;
-    int firstTask_correctAnswers[3] = {2,1,1};
+    // Internal variables
+    bool completed            = false;         // Tells if this module has been succcesfully completed or not
+    int successCount          = 0;             // Current number of passed rounds
+    bool buttonPressed        = false;         // Was the button pressed on the previous iteration
+    unsigned long lastSwitch  = 0;             // Timestamp when the blinker LED was last changed
+    int currentLight          = 0;             // Index of the current blinker LED
 
 };
+
+#endif
