@@ -13,18 +13,17 @@ MemoryModule::~MemoryModule() {
 
 
 /*
-    Retrieves the current "right answer index", that is, how manyth button from correctAnswers should
-    be pushed next.
+    Calculates and returns the cumulative sum of given integer n,
+    that is, 0 + 1 + 2 + ... + n-1 + n.
     Parameters:
-        int successCount                Number of passed rounds
-        int buttonPressNumber           Number of successes this round
+        int n       Highest value in cumulative sum
     Returns:
-        int, idx of the next answer
+        int, the calculated sum
 */
-int getNextAnswerIndex(int successCount, int buttonPressNumber) {
+int cumulativeSum(int n) {
     int ans = 0;
-    for (int i = 0; i <= successCount; i++) { ans += i; }
-    return ans + buttonPressNumber;
+    for (int i = 0; i <= n; i++) { ans += i; }
+    return ans;
 }
 
 
@@ -50,7 +49,8 @@ int MemoryModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, Blinker
     if (!buttonBuffer && btn >= 0) {
 
         // Which button should have been pressed (correct answer)
-        int correctAns = correctAnswers[getNextAnswerIndex(successCount, buttonPressNumber)];
+        int currentIdx = cumulativeSum(successCount) + buttonPressNumber;
+        int correctAns = correctAnswers[currentIdx];
 
         // Correct answer
         if (btn == correctAns) {
