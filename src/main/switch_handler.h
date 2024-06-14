@@ -2,6 +2,12 @@
 #define SWITCH_HANDLER
 
 /*
+  Enum telling the position of a single three-stage switch
+*/
+enum SwitchPosition {down=-1, middle=0, up=1,};
+
+
+/*
   Struct to combine the current states of buttons and switches. 
 */
 struct SwitchStates {
@@ -11,8 +17,8 @@ struct SwitchStates {
   bool btn3;
   bool btn4;
   // Switches 1 and 2
-  int swtch1;
-  int swtch2;
+  SwitchPosition swtch1;
+  SwitchPosition swtch2;
 };
 
 

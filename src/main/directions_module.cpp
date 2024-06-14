@@ -29,7 +29,7 @@ int DirectionsModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, Bli
     if (btn && !buttonPressed) {
 
         // Player's answer
-        int rightSwitch = switchState->swtch1;
+        SwitchPosition rightSwitch = switchState->swtch1;
 
         // Correct answer
         if (rightSwitch == correctAnswers[successCount]) {
@@ -64,7 +64,7 @@ void DirectionsModule::setBlinkers(BlinkerHandler* blnk, SwitchStates* switches)
 
     // Some semi-arbitrary algorithm to define blinker id
     int offset = 2*successCount;
-    int leftSwitch = switches->swtch2;
+    SwitchPosition leftSwitch = switches->swtch2;
     currentBlinker = -leftSwitch + offset + 1;
     while (currentBlinker < 0) {currentBlinker += 3;}
     while (currentBlinker > 2) {currentBlinker -= 3;}

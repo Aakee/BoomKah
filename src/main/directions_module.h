@@ -35,9 +35,9 @@ class DirectionsModule {
     void setRGB(RGBHandler* rgb);
 
     // Defaults
-    int maxSuccessCount = 2;              // Pelase don't change this, the code doesn't currently allow more rounds
-    Color rgbColors[2] = {yellow,blue};   // Color of RGB in the two rounds
-    int correctAnswers[2] = {-1,0};       // Correct switch positions for the two rounds
+    int maxSuccessCount = 2;                           // Pelase don't change this, the code doesn't currently allow more rounds
+    Color rgbColors[2] = {yellow,blue};                // Color of RGB in the two rounds
+    SwitchPosition correctAnswers[2] = {down,middle};  // Correct switch positions for the two rounds
 
 
     // Internal variables
