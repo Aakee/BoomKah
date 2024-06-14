@@ -22,47 +22,32 @@
 // Define pins for actuators
 
 // Module LEDs
-const int redLed1   = 1;
-const int redLed2   = 3;
-const int redLed3   = 5;
+const int RED_LED_1   = 1;
+const int RED_LED_2   = 3;
+const int RED_LED_3   = 5;
 
 // Blinker LEDs
-const int whtLed    = 6;
-const int bluLed    = 7;
-const int ylwLed    = 8;
+const int WHT_LED    = 6;
+const int BLU_LED    = 7;
+const int YLW_LED    = 8;
 
 // RGB LED
-const int rgb_red   = 9;
-const int rgb_blue  = 10;
-const int rgb_green = 11;
+const int RGB_RED   = 9;
+const int RGB_BLUE  = 10;
+const int RGB_GREEN = 11;
 
 // Buttons
-const int btn1 = 0;
-const int btn2 = 2;
-const int btn3 = 4;
-const int btn4 = 12;
+const int BTN1 = 0;
+const int BTN2 = 2;
+const int BTN3 = 4;
+const int BTN4 = 12;
 
 // Buzzer
-const int buz = 13;
+const int BUZ = 13;
 
 // Potentiometers
-const int pot1 = A0;
-const int pot2 = A1;
-
-
-// Global objects
-
-// Event and hardware managers
-auto switches         = SwitchHandler(btn1, btn2, btn3, btn4, pot1, pot2);
-auto moduleLeds       = ModuleLedHandler(redLed1, redLed2, redLed3);
-auto rgb              = RGBHandler(rgb_red, rgb_green, rgb_blue);
-auto blinkers         = BlinkerHandler(whtLed, bluLed, ylwLed);
-auto feedback         = FeedbackHandler(buz);
-
-// Modules, i.e. tasks for the players.
-auto firstTask        = ButtonModule();
-auto secondTask       = DirectionsModule();
-auto thirdTask        = MemoryModule();
+const int POT1 = A0;
+const int POT2 = A1;
 
 
 // Setup function (nothing here at the moment)
@@ -73,6 +58,21 @@ void setup() {
 
 // The main loop
 void loop() {
+
+  // Define static objects (same for each loop)
+
+  // Event and hardware managers
+  static const auto switches         = SwitchHandler(BTN1, BTN2, BTN3, BTN4, POT1, POT2);
+  static const auto moduleLeds       = ModuleLedHandler(RED_LED_1, RED_LED_2, RED_LED_3);
+  static const auto rgb              = RGBHandler(RGB_RED, RGB_GREEN, RGB_BLUE);
+  static const auto blinkers         = BlinkerHandler(WHT_LED, BLU_LED, YLW_LED);
+  static const auto feedback         = FeedbackHandler(BUZ);
+
+  // Modules, i.e. tasks for the players.
+  static const auto firstTask        = ButtonModule();
+  static const auto secondTask       = DirectionsModule();
+  static const auto thirdTask        = MemoryModule();
+  
 
   // Read and get button and potentiometer states
   switches.read();
