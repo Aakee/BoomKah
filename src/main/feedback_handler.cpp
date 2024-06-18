@@ -5,9 +5,13 @@
   Parameters:
     int buz       Arduino pin for the buzzer
 */
-FeedbackHandler::FeedbackHandler(int buz) {
+FeedbackHandler::FeedbackHandler(int buz, int red, int grn) {
   buzPin = buz;
+  redPin = red;
+  grnPin = grn;
   pinMode(buzPin, OUTPUT);
+  pinMode(redPin, OUTPUT);
+  pinMode(grnPin, OUTPUT);
 }
 
 
@@ -18,33 +22,46 @@ FeedbackHandler::~FeedbackHandler() {
 /*
   Plays a single sound for correct action
 */
-void FeedbackHandler::single_correct() {
-  tone(buzPin,success_freq,300);
+void FeedbackHandler::correct() {
+  tone(buzPin, success_freq, singleSoundLength);
   beepsLeft = 0;
+  blinksLeft = 0;
+  lastBlinked = millis();
+  blinkLength = singleBlinkLength;
+  restLength = 0;
+  green();
 }
 
 
 /*
   Plays double sound for correct action
 */
-void FeedbackHandler::double_correct() {
-  tone(buzPin,success_freq,200);
+void FeedbackHandler::module_deactivated() {
+  tone(buzPin, success_freq, doubleSoundLength);
   beepsLeft = 1;
+  blinksLeft = 1;
   lastPlayed = millis();
-  soundLength = 200;
-  restLength = 100;
+  lastBlinked = millis();
+  soundLength = doubleSoundLength;
+  blinkLength = doubleBlinkLength;
+  restLength = doubleRestLength;
+  green();
 }
 
 
 /*
   Plays triple sound for correct action
 */
-void FeedbackHandler::triple_correct() {
-  soundLength = 300;
-  tone(buzPin,success_freq,soundLength);
+void FeedbackHandler::bomb_defused() {
+  tone(buzPin, success_freq, tripleSoundLength);
   beepsLeft = 2;
+  blinksLeft = 0;
   lastPlayed = millis();
-  restLength = 100;
+  lastBlinked = millis();
+  soundLength = tripleSoundLength;
+  blinkLength = tripleBlinkLength;
+  restLength = tripleRestLength;
+  green();
 }
 
 
@@ -52,18 +69,96 @@ void FeedbackHandler::triple_correct() {
   Plays a single sound for wrong action
 */
 void FeedbackHandler::error() {
-  tone(buzPin,error_freq,300);
+  madeError = true;
+  insertTimestampIntoArray();
+  timeout = calculateTimeout();
+  tone(buzPin,error_freq,700);
+  beepsLeft = 0;
+  blinksLeft = 0;
+  lastBlinked = millis();
+  lastError = millis();
+  blinkLength = errorBlinkLength;
+  restLength = 0;
+  red();
 }
 
 
 /*
-  Checks if the next 'queued' sound should be played
+  Sets the red LED on
 */
-void FeedbackHandler::tick() {
+void FeedbackHandler::red() {
+  off();
+  digitalWrite(redPin, HIGH);
+}
+
+
+/*
+  Sets the green LED on
+*/
+void FeedbackHandler::green() {
+  off();
+  digitalWrite(grnPin, HIGH);
+}
+
+
+/*
+  Sets the RG LED off
+*/
+void FeedbackHandler::off() {
+  digitalWrite(redPin, LOW);
+  digitalWrite(grnPin, LOW);
+}
+
+
+/*
+  Checks if the next 'queued' sound and light should be played
+*/
+bool FeedbackHandler::tick() {
   if (beepsLeft > 0 && millis() > lastPlayed + soundLength + restLength) {
     tone(buzPin,success_freq,soundLength);
     beepsLeft -= 1;
     lastPlayed = millis();
   }
+  if (!madeError && millis() > lastBlinked + blinkLength) {
+    off();
+  }
+  else if (madeError && millis() > lastError + timeout) {
+    madeError =  false;
+    off();
+  }
+  if (blinksLeft > 0 && millis() > lastBlinked + blinkLength + restLength) {
+    green();
+    blinksLeft -= 1;
+    lastBlinked = millis();
+  }
+  if (madeError) {return false;}
+  return true;
 }
 
+/*
+  Calculates the timeout for wrong actions
+*/
+int FeedbackHandler::calculateTimeout() {
+  unsigned long currTime = millis();
+  int nErrors = 0;
+  // Calculate the number of errors in the last 60 seconds
+  for (int idx=0; idx < 20; idx++) {
+    if (currTime - errorTimestamps[idx] < 60000 && errorTimestamps[idx] > 0) {
+      nErrors++;
+    }
+  }
+  // Timeout = 0.5 seconds * nof errors during the last minute
+  int to = nErrors * 500;
+  if (to < minTimeout) {to = minTimeout;}
+  if (to > maxTimeout) {to = maxTimeout;}
+  return to;
+}
+
+/*
+  Adds the current timestamp to the circular array errorTimestamps
+*/
+void FeedbackHandler::insertTimestampIntoArray() {
+  errorTimestamps[errorTimestampIdx] = millis();
+  errorTimestampIdx++;
+  if (errorTimestampIdx >= 20) { errorTimestampIdx=0;}  // move the circular index back to 0 if needed
+}
