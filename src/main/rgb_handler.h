@@ -43,13 +43,13 @@ class RGBHandler {
     int bluePin;
 
     // LED color schemes (red-green--blue)
-    int colors[21] = {255,  0,    0,      // red
-                      0,    255,  0,      // green
-                      0,    0,    255,    // blue
-                      100,  255,  0,      // yellow
-                      200,  0,    255,    // purple
-                      0,    100,  100,    // cyan
-                      100,  255,  255     // white
+    int colors[21] = {10,  0,    0,      // red
+                      0,    10,  0,      // green
+                      0,    0,    10,    // blue
+                      20,  5,  0,      // yellow
+                      10,  0,    20,    // purple
+                      0,    15,  10,    // cyan
+                      20,  20,  20     // white
                       };
 
 };
