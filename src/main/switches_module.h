@@ -15,7 +15,7 @@ class SwitchesModule {
   public:
 
     // Creator and destructor
-    SwitchesModule();
+    SwitchesModule(bool randomize = false);
     ~SwitchesModule();
 
     // Main function
@@ -37,18 +37,36 @@ class SwitchesModule {
     // Member method to see if the current answer has been inserted correctly
     bool checkAnswer(SwitchStates*);
 
+    // Gets new combination of blinkers
+    void randomizeBlinkers();
+
     // Defaults
-    int maxSuccessCount = 3;                  // Pelase don't change this, the code doesn't currently allow more rounds
-    char blinkerColors[3] = {0b1001,          // Bit masks of the blinkers on the default case
-                             0b0100,
-                             0b0011,};
+    int maxSuccessCount = 3;                  // Only matters if using randomized mode, otherwise hard-coded 3
+    int defaultBlinkerColors[3] = {7,3,2};     // Default colors (indexes for possibleBlinkerValues)
 
     // Internal variables
     bool completed                = false;           // Tells if this module has been succcesfully completed or not
+    bool randomize;
     int successCount              = 0;               // Current number of passed rounds
     bool buttonPreviouslyPressed  = false;           // Was one of the buttons pressed on the previous iteration; for buffering the button
     char currentBlinkers          = 0b0000;          // Current status of the blinkers
+    char offset                   = 0;               // Random value for RGB calculation
     int currentRGB                = 0;               // Current color index of RGB
+
+
+    // Lists all possible blinker combinations
+    char possibleBlinkerValues[10] = {
+      0b0001,
+      0b0010,
+      0b0011,
+      0b0100,
+      0b0101,
+      0b0110,
+      0b1000,
+      0b1001,
+      0b1010,
+      0b1100,
+  };
 
     // Maps blinker state to correct switch positions
     int blinkers2switches[16] {

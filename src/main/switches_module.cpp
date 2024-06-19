@@ -5,8 +5,17 @@
 #include "feedback_handler.h"
 #include "Arduino.h"
 
-SwitchesModule::SwitchesModule() {
+
+/*
+    Parameters:
+        bool r      Randomize each stage (true) or use pre-determined setup (false)
+*/
+SwitchesModule::SwitchesModule(bool r = false) {
+    if (!r) { maxSuccessCount = 3; randomize = false; }
+    else { randomize = true; }
+    randomizeBlinkers();
 }
+
 
 SwitchesModule::~SwitchesModule() {
 }
@@ -32,9 +41,11 @@ int SwitchesModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, Blink
         if (checkAnswer(switchState)) {
             successCount++;
             ret = 1;
+            randomizeBlinkers();
         } else {
             successCount = 0;
             ret = -1;
+            randomizeBlinkers();
         }
     }
 
@@ -52,11 +63,26 @@ int SwitchesModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, Blink
 
 
 /*
+    Randomizes new values for blinkers, or if not operating randomly, determines the next fixed combination of blinkers
+*/
+void SwitchesModule::randomizeBlinkers() {
+    if (randomize) {
+        int randomIdx = random(10);
+        currentBlinkers = possibleBlinkerValues[randomIdx];
+        offset = random(10);
+    } else {
+        currentBlinkers = possibleBlinkerValues[defaultBlinkerColors[successCount]];
+        offset = successCount;
+    }
+}
+
+
+/*
     Sets the blinker LEDs as needed for this module
 */
 void SwitchesModule::setBlinkers(BlinkerHandler* blnk) {
     if (completed) {blnk->off(); return;}
-    currentBlinkers = blinkerColors[successCount];
+    //currentBlinkers = blinkerColors[successCount];
     blnk->set(currentBlinkers);
 }
 
@@ -71,7 +97,7 @@ void SwitchesModule::setRGB(RGBHandler* rgb, SwitchStates* switches) {
     int sw2 = switches->swtch2;
 
     // This line can be changed to alternate the relation of switch state and RGB color
-    currentRGB = (sw1 + 3*sw2 + successCount) % 8;
+    currentRGB = (sw1 + 3*sw2 + offset) % 8;
     rgb->set(currentRGB);
 }
 
