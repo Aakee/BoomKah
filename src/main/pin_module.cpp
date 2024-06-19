@@ -43,8 +43,10 @@ int PINModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, BlinkerHan
         buttonsPreviouslyPressed[idx] = buttonsPressed[idx];
     }
 
+    if (nofPressedButtons > nofPreviouslyPressedButtons + 1) {shouldReset = true;}
+
     // If button is pressed now but wasn't on the previous iteration
-    if (!shouldReset && nofPressedButtons > nofPreviouslyPressedButtons) {
+    if (!shouldReset && nofPressedButtons == nofPreviouslyPressedButtons + 1) {
 
         // Save the new button
         currentlyPressed[nofPreviouslyPressedButtons] = differingButton;
