@@ -31,7 +31,20 @@ void RGBHandler::set(Color c) {
   int r = colors[3*c];
   int g = colors[3*c+1];
   int b = colors[3*c+2];
-  this->set(r,g,b);
+  set(r,g,b);
+}
+
+
+/*
+  Sets the color of the RGB led according to index given in the parameter.
+  Parameters:
+    int idx         Index of the color
+*/
+void RGBHandler::set(int idx) {
+  while (idx > 7) {idx -= 8;}
+  while (idx < 0) {idx += 8;}
+  Color c = idx;
+  set(c);
 }
 
 
