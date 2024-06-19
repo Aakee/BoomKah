@@ -1,6 +1,7 @@
 #ifndef BLINKER_HANDLER
 #define BLINKER_HANDLER
 
+#include "rgb_handler.h"
 
 /*
   Class to handle the blinker leds.
@@ -20,6 +21,7 @@ class BlinkerHandler {
     void set(bool redVal, bool greenVal, bool blueVal, bool yellowVal);
     void set(char ledSum);
     void set(int ledIdx);
+    void set(Color c);
 
     // Turn all blinker leds off.
     void off();

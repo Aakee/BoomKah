@@ -65,6 +65,20 @@ void BlinkerHandler::set(char ledSum) {
 
 
 /*
+  Sets the blinker LEDs according to the color given as the parameter.
+  Parameters:
+    Color c     Color of the LED to be turned off; set other LED's off
+*/
+void BlinkerHandler::set(Color c) {
+  off();
+  if (c == red)     {set(0);}
+  if (c == green)   {set(1);}
+  if (c == blue)    {set(2);}
+  if (c == yellow)  {set(3);}
+}
+
+
+/*
   Sets the LED with the given idx on, and the rest off.
   Indexes: 0=red, 1=green, 2=blue, 3=yellow
   Parameters:
