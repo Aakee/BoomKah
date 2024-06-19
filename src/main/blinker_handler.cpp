@@ -56,6 +56,7 @@ void BlinkerHandler::set(bool redVal, bool greenVal, bool blueVal, bool yellowVa
 */
 void BlinkerHandler::set(char ledSum) {
   bool r=false; bool g=false; bool b=false; bool y=false;
+  ledSum = ledSum % 16;
   if (ledSum & 1 << 0) {r=true;}
   if (ledSum & 1 << 1) {g=true;}
   if (ledSum & 1 << 2) {b=true;}
@@ -70,11 +71,11 @@ void BlinkerHandler::set(char ledSum) {
     Color c     Color of the LED to be turned off; set other LED's off
 */
 void BlinkerHandler::set(Color c) {
-  off();
-  if (c == red)     {set(0);}
-  if (c == green)   {set(1);}
-  if (c == blue)    {set(2);}
-  if (c == yellow)  {set(3);}
+  if      (c == red)     {set(0);}
+  else if (c == green)   {set(1);}
+  else if (c == blue)    {set(2);}
+  else if (c == yellow)  {set(3);}
+  else {off();}
 }
 
 
@@ -85,11 +86,11 @@ void BlinkerHandler::set(Color c) {
     int ledIdx: Idx of the LED to be turned  on
 */
 void BlinkerHandler::set(int ledIdx) {
-  off();
-  if (ledIdx == 0) {set(true,  false, false, false);}
-  if (ledIdx == 1) {set(false, true,  false, false);}
-  if (ledIdx == 2) {set(false, false, true,  false);}
-  if (ledIdx == 3) {set(false, false, false, true );}
+  if      (ledIdx == 0) {set(true,  false, false, false);}
+  else if (ledIdx == 1) {set(false, true,  false, false);}
+  else if (ledIdx == 2) {set(false, false, true,  false);}
+  else if (ledIdx == 3) {set(false, false, false, true );}
+  else {off();}
 }
 
 
