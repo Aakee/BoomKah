@@ -15,7 +15,7 @@ class PINModule {
   public:
 
     // Creator and destructor
-    PINModule();
+    PINModule(bool r = false);
     ~PINModule();
 
     // Main function
@@ -27,9 +27,6 @@ class PINModule {
   
   private:
 
-    // Configuration
-
-
     // Member methods to help set the leds correctly
     void setBlinkers(BlinkerHandler*, SwitchStates*);
     void setRGB(RGBHandler*);
@@ -37,29 +34,38 @@ class PINModule {
     // Member method to see if the current answer has been inserted correctly
     bool checkAnswer(SwitchStates*);
 
+    // Randomizes the switches-blinkers-relationship if using randomized mode. (Does nothing if not using randomized mode.)
+    void randomizeBlinkers();
+
     // Defaults
-    int maxSuccessCount = 1;                  // Pelase don't change this, the code doesn't currently allow more rounds
+    int maxSuccessCount = 1;          // Changing this only applies to randomized mode
 
     // Internal variables
     bool completed                      = false;           // Tells if this module has been succcesfully completed or not
     int successCount                    = 0;               // Current number of passed rounds
-    bool buttonsPreviouslyPressed[4]    = {false, false, false, false,};         // Was one of the buttons pressed on the previous iteration; for buffering the button
+    bool buttonsPreviouslyPressed[4]    = {false, false, false, false,}; // Button statuses of the previous iteration
     char currentBlinkers                = 0b0000;          // Current status of the blinkers
-    int currentlyPressed[4]             = {0};
-    bool shouldReset                    = false;
+    int currentlyPressed[4]             = {0};             // Order in which the buttons were pressed
+    bool shouldReset                    = false;           // true -> does not accept new presses until all buttons are released
+    bool randomize;                                        // Whether to use randomized mode or not (set in initializer)
 
+    // Maps the switch states to the correct pin codes. Every 4-integer sequence describes one such code.
+    // Do not change! Otherwise the correct PIN codes from manual do not work.
     const int switches2pin[36] {
-        1,3,2,4,
-        3,1,2,4,
-        2,4,1,3,
-        4,1,3,2,
-        2,3,4,1,
-        3,4,2,1,
-        4,3,2,1,
-        4,2,3,1,
-        2,1,4,2,
+        1,3,2,4,    // down, down
+        3,1,2,4,    // down, middle
+        2,4,1,3,    // down, up
+        4,1,3,2,    // middle, down
+        2,3,4,1,    // middle, middle
+        3,4,2,1,    // middle, up
+        4,3,2,1,    // up, down
+        4,2,3,1,    // up, middle
+        2,1,4,2,    // up, up
     };
 
+    // Maps the switcch positions to blinker statuses: first three values are for first switch (down-middle-up),
+    // and last three for the second switch (down-middle-up). The final blinkers are set with first + second.
+    // The values here are also the default values, but they arae changed during the runtime, if using randomized mode.
     int switches2blinkers[6] {
         0b1010,
         0b0100,
