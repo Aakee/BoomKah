@@ -16,7 +16,7 @@ SimonModule::SimonModule(bool r = false) {
         randomize = true;
         if (maxSuccessCount > MAX_NOF_ROUDS) { maxSuccessCount = MAX_NOF_ROUDS; }
     }
-    // Set the blinker status
+    // Set the blinker sequence and rgb color
     randomizeSequence();
 }
 
@@ -50,7 +50,7 @@ int SimonModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, BlinkerH
         if (switchState->btn3) {btnNumber = 2;}
         if (switchState->btn4) {btnNumber = 3;}
 
-        // Player's answer, and ccorrect answer
+        // Player's answer, and correct answer
         Color answer        = button2blinker[4*currentRgbIndex + btnNumber];
         Color correctAnswer = blinkerOrder[currentPressIdx];
 
@@ -64,8 +64,11 @@ int SimonModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, BlinkerH
             successCount = 0;
             currentPressIdx = 0;
             ret = -1;
+            randomizeSequence();
         }
     }
+
+    // Save the status whether button was pressed
     buttonPreviouslyPressed = buttonPressed;
 
     // Check if advances to next round
@@ -96,14 +99,23 @@ int SimonModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, BlinkerH
 void SimonModule::setBlinkers(BlinkerHandler* blnk) {
     unsigned long currentTime = millis();
     bool rest = false;
+
+    // Set the blinkers to rest
     if ( currentTime > lastSwitch + blinkDuration ) { rest =  true; }
+
+    // Advance to next blinker
     if ( currentTime > lastSwitch + blinkDuration + restDuration ) {
         currentBlinkIndex++;
         lastSwitch =  millis();
     }
+
+    // Loop back to the beginning
     if ( currentBlinkIndex > successCount ) { currentBlinkIndex = -2; }
 
+    // Put the blinkers off if a) rest period or b) idx is < 0
     if (rest || currentBlinkIndex < 0) { blnk->off(); }
+
+    // Switch the correct blinker on
     else {
         Color c = blinkerOrder[currentBlinkIndex];
         blnk->set(c);
@@ -120,6 +132,21 @@ void SimonModule::setRGB(RGBHandler* rgb) {
 }
 
 
+/*
+    Randomizes the blinker sequence and rgb color if using randomized mode.
+    Does nothing if not using randomized mode.
+*/
 void SimonModule::randomizeSequence() {
+    // Do nothing if not using randomized mode
+    if (!randomize) {return;}
+
+    // Up until the maximum number of lights (maxSucessCount), randomize the individual blinker colors
+    Color colors[4] = {red, blue, green, yellow};
+    for ( int idx = 0; idx < maxSuccessCount; idx++ ) {
+        blinkerOrder[idx] = colors[random(4)];
+    }
+
+    // Randomize RGB color
+    currentRgbIndex = random(3);
 
 }

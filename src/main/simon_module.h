@@ -13,7 +13,7 @@
 */
 
 // Absolute maximum number of rounds for this module
-const int MAX_NOF_ROUDS = 32;
+const int MAX_NOF_ROUDS = 16;
 
 class SimonModule {
 
@@ -41,9 +41,9 @@ class SimonModule {
 
     // Defaults
     int maxSuccessCount = 4;          // Changing this only applies to randomized mode
-    int blinkerOrder[MAX_NOF_ROUDS]     = {blue, green, blue, yellow}; // Order in whicch the blinkers blink
-    long blinkDuration                  = 800;
-    long restDuration                   = 200;
+    Color blinkerOrder[MAX_NOF_ROUDS]     = {blue, green, blue, yellow}; // Order in which the blinkers blink
+    long blinkDuration                  = 700;
+    long restDuration                   = 300;
 
     // Internal variables
     bool completed                      = false;           // Tells if this module has been succcesfully completed or not
@@ -58,7 +58,7 @@ class SimonModule {
     bool randomize;                                        // Whether to use randomized mode or not (set in initializer)
 
     // Maps the four buttons to corresponding four blinkers, for eacch possible RGB color.
-    // Do not change! Otherwise the correct button sequencecs from manual won't work.
+    // Do not change! Otherwise the correct button sequences from manual won't work.
     const Color button2blinker[12] {
         green,  red,    blue,   yellow,     // Red RGB
         red,    yellow, green,  blue,       // Blue RGB
