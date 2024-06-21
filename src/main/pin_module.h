@@ -60,7 +60,7 @@ class PINModule {
         3,4,2,1,    // middle, up
         4,3,2,1,    // up, down
         4,2,3,1,    // up, middle
-        2,1,4,2,    // up, up
+        2,1,4,3,    // up, up
     };
 
     // Maps the switcch positions to blinker statuses: first three values are for first switch (down-middle-up),
