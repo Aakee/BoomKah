@@ -1,5 +1,5 @@
 #ifndef PIN_MODULE
-#define SWITCHES_MODULE
+#define PIN_MODULE
 
 #include "switch_handler.h"
 #include "RGB_handler.h"
@@ -8,7 +8,8 @@
 
 /*
   Game module.
-  
+  Player finds a combination of left and right switch in which all four blinkers are lit, and based on
+  the positions inserts a four-digit PIN code.
 */
 class PINModule {
 
