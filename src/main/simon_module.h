@@ -49,7 +49,7 @@ class SimonModule {
     bool completed                      = false;           // Tells if this module has been succcesfully completed or not
     int successCount                    = 0;               // Current number of passed rounds
     int currentPressIdx                 = 0;
-    bool buttonPreviouslyPressed        = false;
+    bool buttonPreviouslyPressed        = true;
     bool shouldReset                    = false;           // true -> does not accept new presses until all buttons are released
     Color rgbColors[3]                  = {red, blue, green}; // Possible RGB values
     int currentRgbIndex                 = 1;

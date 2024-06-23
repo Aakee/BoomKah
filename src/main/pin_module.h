@@ -47,7 +47,7 @@ class PINModule {
     bool buttonsPreviouslyPressed[4]    = {false, false, false, false,}; // Button statuses of the previous iteration
     char currentBlinkers                = 0b0000;          // Current status of the blinkers
     int currentlyPressed[4]             = {0};             // Order in which the buttons were pressed
-    bool shouldReset                    = false;           // true -> does not accept new presses until all buttons are released
+    bool shouldReset                    = true;           // true -> does not accept new presses until all buttons are released
     bool randomize;                                        // Whether to use randomized mode or not (set in initializer)
 
     // Maps the switch states to the correct pin codes. Every 4-integer sequence describes one such code.

@@ -48,7 +48,7 @@ class SwitchesModule {
     bool completed                = false;           // Tells if this module has been succcesfully completed or not
     bool randomize;
     int successCount              = 0;               // Current number of passed rounds
-    bool buttonPreviouslyPressed  = false;           // Was one of the buttons pressed on the previous iteration; for buffering the button
+    bool buttonPreviouslyPressed  = true;           // Was one of the buttons pressed on the previous iteration; for buffering the button
     char currentBlinkers          = 0b0000;          // Current status of the blinkers
     char offset                   = 0;               // Random value for RGB calculation
     int currentRGB                = 0;               // Current color index of RGB
