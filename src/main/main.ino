@@ -15,9 +15,6 @@
 #include "feedback_handler.h"
 #include "Arduino.h"
 
-#include "button_module.h"
-#include "directions_module.h"
-#include "memory_module.h"
 #include "switches_module.h"
 #include "pin_module.h"
 #include "simon_module.h"
