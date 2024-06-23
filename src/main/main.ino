@@ -18,6 +18,14 @@
 #include "button_module.h"
 #include "directions_module.h"
 #include "memory_module.h"
+#include "switches_module.h"
+#include "pin_module.h"
+#include "simon_module.h"
+#include "venn_module.h"
+
+
+// false --> always the same answers. true --> randomizes the proceedings
+const bool RANDOMIZE = false;
 
 
 // Define pins for actuators
@@ -59,7 +67,7 @@ const int SWTCH2     = A5;
 
 // Setup function (nothing here at the moment)
 void setup() {
-  //Serial.begin(9600);
+  Serial.begin(9600);
 }
 
 
@@ -76,36 +84,59 @@ void loop() {
   static const auto feedback         = FeedbackHandler(BUZ, RG_RED, RG_GREEN);
 
   // Modules, i.e. tasks for the players.
-  //static const auto firstTask        = ButtonModule();
-  //static const auto secondTask       = DirectionsModule();
-  //static const auto thirdTask        = MemoryModule();
-  
+  static const auto firstTask         = SwitchesModule(RANDOMIZE);
+  static const auto secondTask        = SimonModule(RANDOMIZE);
+  static const auto thirdTask         = VennModule(RANDOMIZE);
+  static const auto fourthTask        = PINModule(RANDOMIZE);
 
-  // Read and get button and potentiometer states
+
+
+  // Tick the feedback light and sound, and see if the player is on cooldown
+  bool canContinue = feedback.tick();
+  if (!canContinue) {
+    rgb.off(); blinkers.off(); return;
+  }
+
+  // Read and get button and switch states
   switches.read();
   SwitchStates* states = switches.get();
 
+  // Initialize module return value
+  int success = 0;
 
-  bool canContinue = feedback.tick();
-  if (!canContinue) {return;}
 
-  char ledValue = 0;
-  if (states->btn1) {ledValue += 0b0001;}
-  if (states->btn2) {ledValue += 0b0010;}
-  if (states->btn3) {ledValue += 0b0100;}
-  if (states->btn4) {ledValue += 0b1000;}
-  blinkers.set(ledValue);
+  // Run through the first not-yet-completed task
+  if (!firstTask.isCompleted()) {
+    moduleLeds.set(1);
+    success = firstTask.run(states, &rgb, &blinkers);
+  }
+  else if (!secondTask.isCompleted()) {
+    moduleLeds.set(2);
+    success = secondTask.run(states, &rgb, &blinkers);
+  }
+  else if (!thirdTask.isCompleted()) {
+    moduleLeds.set(3);
+    success = thirdTask.run(states, &rgb, &blinkers);
+  }
+  else if (!fourthTask.isCompleted()) {
+    moduleLeds.set(4);
+    success = fourthTask.run(states, &rgb, &blinkers);
+  }
+  
+  // If the last module was just completed --> bomb defused, set blinkers off and send feedback
+  if (success == 2 && fourthTask.isCompleted()) {
+    rgb.off();
+    blinkers.off();
+    moduleLeds.off();
+    feedback.bomb_defused();
+  }
 
-  int redval = 0;  int bluval=0;  int grnval = 0;
-  if (states->swtch1 < 0) {redval = 10;}
-  if (states->swtch1 > 0) {bluval = 10;}
-  if (states->swtch2 < 0) {redval = 10;}
-  if (states->swtch2 > 0) {grnval = 10;}
-  rgb.set(redval, grnval, bluval);
+  // Otherwise, do actions based on the return value of the module
+  else if (success ==  1) {feedback.correct();}
+  else if (success ==  2) {feedback.module_deactivated();}
+  else if (success == -1) {feedback.error();}
 
-  if (states->btn1) {feedback.correct();}
-  if (states->btn2) {feedback.module_deactivated();}
-  if (states->btn3) {feedback.bomb_defused();}
-  if (states->btn4) {feedback.error();}
+  // Advance the pseudo random number generator
+  random();
 
 }
