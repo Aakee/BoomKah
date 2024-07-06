@@ -2,7 +2,7 @@
 #define SWITCHES_MODULE
 
 #include "switch_handler.h"
-#include "RGB_handler.h"
+#include "rgb_handler.h"
 #include "blinker_handler.h"
 #include "feedback_handler.h"
 
