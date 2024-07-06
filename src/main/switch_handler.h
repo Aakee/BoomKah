@@ -4,7 +4,7 @@
 /*
   Enum telling the position of a single three-stage switch
 */
-enum SwitchPosition {down=-1, middle=0, up=1,};
+enum SwitchPosition {down=0, middle=1, up=2,};
 
 
 /*

@@ -14,6 +14,7 @@ RGBHandler::RGBHandler(int rp, int gp, int bp) {
   pinMode(redPin,   OUTPUT);
   pinMode(greenPin, OUTPUT);
   pinMode(bluePin,  OUTPUT);
+  off();
 }
 
 
@@ -30,7 +31,20 @@ void RGBHandler::set(Color c) {
   int r = colors[3*c];
   int g = colors[3*c+1];
   int b = colors[3*c+2];
-  this->set(r,g,b);
+  set(r,g,b);
+}
+
+
+/*
+  Sets the color of the RGB led according to index given in the parameter.
+  Parameters:
+    int idx         Index of the color
+*/
+void RGBHandler::set(int idx) {
+  while (idx > 7) {idx -= 8;}
+  while (idx < 0) {idx += 8;}
+  Color c = idx;
+  set(c);
 }
 
 
@@ -43,9 +57,9 @@ void RGBHandler::set(Color c) {
     int blueVal     Brightness of blue LED
 */
 void RGBHandler::set(int redVal, int greenVal, int blueVal) {
-  analogWrite(redPin,   redVal);
-  analogWrite(greenPin, greenVal);
-  analogWrite(bluePin,  blueVal);
+  analogWrite(redPin,   255-redVal);
+  analogWrite(greenPin, 255-greenVal);
+  analogWrite(bluePin,  255-blueVal);
 }
 
 
@@ -53,7 +67,7 @@ void RGBHandler::set(int redVal, int greenVal, int blueVal) {
   Switches the RGB LED off.
 */
 void RGBHandler::off() {
-  analogWrite(redPin,   0);
-  analogWrite(greenPin, 0);
-  analogWrite(bluePin,  0);
+  analogWrite(redPin,   255);
+  analogWrite(greenPin, 255);
+  analogWrite(bluePin,  255);
 }

@@ -8,7 +8,7 @@ class ModuleLedHandler {
   public:
 
     // Creator and destructor
-    ModuleLedHandler(int p1, int p2, int p3);
+    ModuleLedHandler(int p1, int p2, int p3, int p4);
     ~ModuleLedHandler();
 
     // Set the given module LED on
@@ -24,6 +24,7 @@ class ModuleLedHandler {
     int pin1;
     int pin2;
     int pin3;
+    int pin4;
 
 };
 
