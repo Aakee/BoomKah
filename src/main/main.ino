@@ -35,17 +35,17 @@ const int MOD_LED_4   = 3;
 
 // Blinker LEDs
 const int RED_LED    = 4;
-const int GRN_LED    = 5;
-const int BLU_LED    = 6;
-const int YLW_LED    = 7;
+const int GRN_LED    = 6;
+const int BLU_LED    = 7;
+const int YLW_LED    = 11;
 
 // Buzzer
 const int BUZ        = 8;
 
 // RGB LED
-const int RGB_RED    = 9;
-const int RGB_BLUE   = 10;
-const int RGB_GREEN  = 11;
+const int RGB_RED    = 5;
+const int RGB_BLUE   = 9;
+const int RGB_GREEN  = 10;
 
 // RG LED
 const int RG_RED     = 12;
