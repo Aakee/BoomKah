@@ -64,8 +64,8 @@ class VennModule {
         3*down  +   middle, 4,      // 0b0010       F
         3*middle+   up,     3,      // 0b0011       C
         3*up    +   down,   1,      // 0b0100       H
-        3*up    +   up,     4,      // 0b0101       E
-        3*down  +   down,   2,      // 0b0110       G
+        3*down  +   down,   4,      // 0b0101       E
+        3*up    +   up,     2,      // 0b0110       G
         3*up    +   middle, 1,      // 0b0111       D    
     };
 
