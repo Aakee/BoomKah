@@ -25,12 +25,13 @@
 // false --> always the same answers. true --> randomizes the proceedings
 const bool RANDOMIZE = false;
 
+const bool EASYMODE = true;
 
 // Define pins for actuators
 
 // Module LEDs
-const int MOD_LED_1   = 0;
-const int MOD_LED_2   = 1;
+const int MOD_LED_1   = 1;
+const int MOD_LED_2   = 0;
 const int MOD_LED_3   = 2;
 const int MOD_LED_4   = 3;
 
@@ -65,7 +66,7 @@ const int SWTCH2     = A5;
 
 // Setup function (nothing here at the moment)
 void setup() {
-  Serial.begin(9600);
+  //Serial.begin(9600);
 }
 
 
@@ -82,13 +83,11 @@ void loop() {
   static const auto feedback         = FeedbackHandler(BUZ, RG_RED, RG_GREEN);
 
   // Modules, i.e. tasks for the players.
-  //static const auto firstTask         = SwitchesModule(RANDOMIZE);
-  static const auto firstTask         = TestModule(RANDOMIZE);
+  //static const auto firstTask         = TestModule(RANDOMIZE);
+  static const auto firstTask         = SwitchesModule(RANDOMIZE);
   static const auto secondTask        = SimonModule(RANDOMIZE);
-  static const auto thirdTask         = VennModule(RANDOMIZE);
+  static const auto thirdTask         = VennModule(RANDOMIZE, EASYMODE);
   static const auto fourthTask        = PINModule(RANDOMIZE);
-
-
 
   // Tick the feedback light and sound, and see if the player is on cooldown
   bool canContinue = feedback.tick();

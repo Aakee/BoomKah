@@ -19,7 +19,8 @@ class VennModule {
   public:
 
     // Creator and destructor
-    VennModule(bool r = false);
+    VennModule(bool r);
+    VennModule(bool r, bool e);
     ~VennModule();
 
     // Main function
@@ -27,6 +28,9 @@ class VennModule {
 
     // Returns if this module has been succesfully completed or not
     bool isCompleted() {return completed;}
+
+    // Module does not reset progress on error if true
+    bool easymode = false;
 
   
   private:

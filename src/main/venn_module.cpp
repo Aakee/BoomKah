@@ -17,6 +17,21 @@ VennModule::VennModule(bool r = false) {
     randomizeState();
 }
 
+/*
+    Parameters:
+        bool r      Whether to use randomized mode (true) or not (false)
+        bool e      Whether to use easy mode (true) or not (false)
+*/
+VennModule::VennModule(bool r = false, bool e = false) {
+    // Check whether using randomized mode or not
+    if (!r) { maxSuccessCount = 3; randomize = false; }
+    else { randomize = true; }
+    // Check and set asy mode
+    if (e) {easymode = true;}
+    // Set the blinker sequence and rgb color
+    randomizeState();
+}
+
 
 VennModule::~VennModule() {
 }
@@ -48,7 +63,7 @@ int VennModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, BlinkerHa
         
         // Wrong answer
         else {
-            successCount = 0;
+            if (!easymode) { successCount = 0; }
             ret = -1;
         }
 
