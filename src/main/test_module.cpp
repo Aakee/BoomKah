@@ -49,9 +49,12 @@ int TestModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, BlinkerHa
     // Set indicator and return value according to buttons
     if (switchState->btn1) {
         rgbHandler->set(red);
-        ret = 1;
-        successCount++;
-    }
+        if (!buttonPressed) {
+            ret = 1;
+            successCount++;
+        }
+        buttonPressed = true;
+    } else {buttonPressed = false;}
     if (switchState->btn2) {
         rgbHandler->set(green);
     }
@@ -67,6 +70,7 @@ int TestModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, BlinkerHa
     // Module completed?
     if (successCount >= maxSuccessCount) {
         ret = 2;
+        completed = true;
     }
 
     return ret;

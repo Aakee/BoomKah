@@ -34,6 +34,7 @@ class TestModule {
     // Internal variables
     bool completed                      = false;           // Tells if this module has been succcesfully completed or not
     int successCount                    = 0;               // Current number of passed rounds
+    int buttonPressed                   = false;
 
 };
 
