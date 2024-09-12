@@ -37,16 +37,16 @@ SwitchHandler::~SwitchHandler() {
 void SwitchHandler::read() {
   // Read statuses of buttons
 
-  if (digitalRead(btn1_pin) == LOW) {currentStates.btn1 = true;}
+  if (digitalRead(btn1_pin) == HIGH) {currentStates.btn1 = true;}
   else {currentStates.btn1 = false;}
 
-  if (digitalRead(btn2_pin) == LOW) {currentStates.btn2 = true;}
+  if (digitalRead(btn2_pin) == HIGH) {currentStates.btn2 = true;}
   else {currentStates.btn2 = false;}
 
-  if (digitalRead(btn3_pin) == LOW) {currentStates.btn3 = true;}
+  if (digitalRead(btn3_pin) == HIGH) {currentStates.btn3 = true;}
   else {currentStates.btn3 = false;}
 
-  if (digitalRead(btn4_pin) == LOW) {currentStates.btn4 = true;}
+  if (digitalRead(btn4_pin) == HIGH) {currentStates.btn4 = true;}
   else {currentStates.btn4 = false;}
 
   
