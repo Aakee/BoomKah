@@ -49,8 +49,8 @@ const int RGB_BLUE   = 9;
 const int RGB_GREEN  = 10;
 
 // RG LED
-const int RG_RED     = 12;
-const int RG_GREEN   = 13;
+const int RG_RED     = 13;
+const int RG_GREEN   = 12;
 
 // Buttons
 const int BTN1       = A0;
