@@ -36,22 +36,27 @@ SwitchHandler::~SwitchHandler() {
 */
 void SwitchHandler::read() {
   // Read statuses of buttons
+  unsigned long currentTime = millis();
 
-  if (digitalRead(btn1_pin) == HIGH) {currentStates.btn1 = true;}
-  else {currentStates.btn1 = false;}
+  int pins[4] = {btn1_pin, btn2_pin, btn3_pin, btn4_pin};
+  bool bufferedStates[4] = {currentStates.btn1, currentStates.btn2, currentStates.btn3, currentStates.btn4};
 
-  if (digitalRead(btn2_pin) == HIGH) {currentStates.btn2 = true;}
-  else {currentStates.btn2 = false;}
+  // Buffer button statuses such that the changes are registered if the current status has persisted
+  // constantly at least a pre-determined amount of time. This is to reduce eccet of static noise
+  // or annoyance of barely-closed buttons, etc.
+  for (int idx=0; idx < 4; idx++) {
+    bool currentState = digitalRead(pins[idx]);
+    if (currentState != buttonRealStates[idx]) { buttonsLastChange[idx] = currentTime; }
+    if (currentTime - buttonsLastChange[idx] > buttonStateChangeBuffer) {bufferedStates[idx] = currentState;}
+    buttonRealStates[idx] = digitalRead(pins[idx]);
+  }
 
-  if (digitalRead(btn3_pin) == HIGH) {currentStates.btn3 = true;}
-  else {currentStates.btn3 = false;}
+  currentStates.btn1 = bufferedStates[0];
+  currentStates.btn2 = bufferedStates[1];
+  currentStates.btn3 = bufferedStates[2];
+  currentStates.btn4 = bufferedStates[3];
 
-  if (digitalRead(btn4_pin) == HIGH) {currentStates.btn4 = true;}
-  else {currentStates.btn4 = false;}
-
-  
-  // Read statuses of potentiometers, and translate the analog reading to discrete position
-
+  // Read and save switch positions (no buffering is needed here)
   int sw1pos = analogRead(swtch1_pin);
   if      (sw1pos < 250) {currentStates.swtch1 = down;}
   else if (sw1pos < 750) {currentStates.swtch1 = up;}

@@ -41,6 +41,7 @@ class SwitchHandler {
     
   
   private:
+    // Holds the buffered states of buttons and switches
     struct SwitchStates currentStates;
 
     // Arduino pins of buttons and switches
@@ -50,6 +51,15 @@ class SwitchHandler {
     int btn4_pin;
     int swtch1_pin;
     int swtch2_pin;
+
+    // "Real" button states, that is, states read from pins
+    bool buttonRealStates[4] = {false, false, false, false};
+
+    // Timestamps of last registered change of button "real" states
+    unsigned long buttonsLastChange[4] = {0,0,0,0};
+
+    // This many milliseconds must pass without the state of button changing so that the change will be registered
+    unsigned long buttonStateChangeBuffer = 100; // milliseconds
 
 };
 
