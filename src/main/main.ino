@@ -45,8 +45,8 @@ const int BUZ        = 8;
 
 // RGB LED
 const int RGB_RED    = 5;
-const int RGB_BLUE   = 9;
-const int RGB_GREEN  = 10;
+const int RGB_BLUE   = 10;
+const int RGB_GREEN  = 9;
 
 // RG LED
 const int RG_RED     = 13;
