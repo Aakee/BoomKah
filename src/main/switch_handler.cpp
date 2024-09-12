@@ -53,14 +53,14 @@ void SwitchHandler::read() {
   // Read statuses of potentiometers, and translate the analog reading to discrete position
 
   int sw1pos = analogRead(swtch1_pin);
-  if      (sw1pos < 250) {currentStates.swtch1 = middle;}
+  if      (sw1pos < 250) {currentStates.swtch1 = down;}
   else if (sw1pos < 750) {currentStates.swtch1 = up;}
-  else                   {currentStates.swtch1 = down;}
+  else                   {currentStates.swtch1 = middle;}
 
   int sw2pos = analogRead(swtch2_pin);
-  if      (sw2pos < 250) {currentStates.swtch2 = middle;}
+  if      (sw2pos < 250) {currentStates.swtch2 = down;}
   else if (sw2pos < 750) {currentStates.swtch2 = up;}
-  else                   {currentStates.swtch2 = down;}
+  else                   {currentStates.swtch2 = middle;}
 }
 
 
