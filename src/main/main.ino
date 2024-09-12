@@ -15,6 +15,7 @@
 #include "feedback_handler.h"
 #include "Arduino.h"
 
+#include "test_module.h"
 #include "switches_module.h"
 #include "pin_module.h"
 #include "simon_module.h"
@@ -81,7 +82,8 @@ void loop() {
   static const auto feedback         = FeedbackHandler(BUZ, RG_RED, RG_GREEN);
 
   // Modules, i.e. tasks for the players.
-  static const auto firstTask         = SwitchesModule(RANDOMIZE);
+  //static const auto firstTask         = SwitchesModule(RANDOMIZE);
+  static const auto firstTask         = TestModule(RANDOMIZE);
   static const auto secondTask        = SimonModule(RANDOMIZE);
   static const auto thirdTask         = VennModule(RANDOMIZE);
   static const auto fourthTask        = PINModule(RANDOMIZE);
