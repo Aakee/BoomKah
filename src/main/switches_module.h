@@ -42,7 +42,7 @@ class SwitchesModule {
 
     // Defaults
     int maxSuccessCount = 3;                  // Only matters if using randomized mode, otherwise hard-coded 3
-    int defaultBlinkerColors[3] = {7,3,2};     // Default colors (indexes for possibleBlinkerValues)
+    int defaultBlinkerColors[3] = {8,3,2};     // Default colors (indexes for possibleBlinkerValues)
 
     // Internal variables
     bool completed                = false;           // Tells if this module has been succcesfully completed or not
