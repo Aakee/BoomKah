@@ -75,6 +75,9 @@ void loop() {
 
   // Define static objects (same for each loop)
 
+  // Boolean telling if the game has been started yet
+  static bool started = false;
+
   // Event and hardware managers
   static const auto switches         = SwitchHandler(BTN1, BTN2, BTN3, BTN4, SWTCH1, SWTCH2);
   static const auto moduleLeds       = ModuleLedHandler(MOD_LED_1, MOD_LED_2, MOD_LED_3, MOD_LED_4);
@@ -98,6 +101,15 @@ void loop() {
   // Read and get button and switch states
   switches.read();
   SwitchStates* states = switches.get();
+
+  // If not started, set default state
+  if (!started) {
+    feedback.red();
+    if (states->btn1 || states->btn2 || states->btn3 || states->btn4) {
+      feedback.off();
+      started = true;
+    } else {random();return;}
+  }
 
   // Initialize module return value
   int success = 0;
