@@ -4,6 +4,8 @@
 /*
   Parameters:
     int buz       Arduino pin for the buzzer
+    int red       Arduino pin for red led
+    int grn       Arduino pin for green led
 */
 FeedbackHandler::FeedbackHandler(int buz, int red, int grn) {
   buzPin = buz;
@@ -20,7 +22,7 @@ FeedbackHandler::~FeedbackHandler() {
 
 
 /*
-  Plays a single sound for correct action
+  Plays a single sound and flash led green for correct action
 */
 void FeedbackHandler::correct() {
   tone(buzPin, success_freq, singleSoundLength);
@@ -34,7 +36,7 @@ void FeedbackHandler::correct() {
 
 
 /*
-  Plays double sound for correct action
+  Plays double sound and flashes green twice for deactivated module
 */
 void FeedbackHandler::module_deactivated() {
   tone(buzPin, success_freq, doubleSoundLength);
@@ -50,7 +52,7 @@ void FeedbackHandler::module_deactivated() {
 
 
 /*
-  Plays triple sound for correct action
+  Plays triple sound and leave green on for defused bomb
 */
 void FeedbackHandler::bomb_defused() {
   tone(buzPin, success_freq, tripleSoundLength);
@@ -66,7 +68,7 @@ void FeedbackHandler::bomb_defused() {
 
 
 /*
-  Plays a single sound for wrong action
+  Plays a single low sound and blink red red for wrong action
 */
 void FeedbackHandler::error() {
   madeError = true;
@@ -111,26 +113,33 @@ void FeedbackHandler::off() {
 
 
 /*
-  Checks if the next 'queued' sound and light should be played
+  Checks if the next 'queued' sound and light should be played.
+  Returns true if the player can continue defusing the bomb, or false if there is still
+  cooldown left for wrong actions.
 */
 bool FeedbackHandler::tick() {
+  // Check double- and triple beeps
   if (beepsLeft > 0 && millis() > lastPlayed + soundLength + restLength) {
     tone(buzPin,success_freq,soundLength);
     beepsLeft -= 1;
     lastPlayed = millis();
   }
+  // Turn the green led off if needed
   if (!madeError && millis() > lastBlinked + blinkLength) {
     off();
   }
+  // Turn the red led off if needed
   else if (madeError && millis() > lastError + timeout) {
     madeError =  false;
     off();
   }
+  // Turn the green led on again if needed
   if (blinksLeft > 0 && millis() > lastBlinked + blinkLength + restLength) {
     green();
     blinksLeft -= 1;
     lastBlinked = millis();
   }
+  // Return false, if there is still cooldown for wrong actions; else, return true.
   if (madeError) {return false;}
   return true;
 }
@@ -148,6 +157,7 @@ int FeedbackHandler::calculateTimeout() {
     }
   }
   // Timeout = 0.5 seconds * nof errors during the last minute
+  // (minimum: minTimeout, maximum: maxTimeout)
   int to = nErrors * 500;
   if (to < minTimeout) {to = minTimeout;}
   if (to > maxTimeout) {to = maxTimeout;}

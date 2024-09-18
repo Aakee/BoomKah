@@ -39,7 +39,8 @@ class VennModule {
     void setBlinkers(BlinkerHandler*);
     void setRGB(RGBHandler*);
 
-    // Randomizes the switches-blinkers-relationship if using randomized mode. (Does nothing if not using randomized mode.)
+    // Randomizes the current blinkers and rgb if using randomized mode. Sets the correct pre-determined states for blinkers
+    // and rgb if using deterministic mode.
     void randomizeState();
 
     bool checkAnswer(SwitchStates*);

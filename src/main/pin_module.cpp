@@ -187,7 +187,7 @@ void PINModule::randomizeBlinkers() {
     // Final result:
     // - Each switch has in their three positions the following: one pair of two blinkers
     //   and two individual blinkers
-    // - This set is randomly assigned to the three switch positios
+    // - This set is randomly assigned to the three switch positions
     // - The 'pairs' of the two switches are complementary: if one switch has blinkers 1 and 2,
     //   the other switch has blinkers 3 and 4
     // Thus, when both switches are set to the position in which the pair is assigned, all blinkers

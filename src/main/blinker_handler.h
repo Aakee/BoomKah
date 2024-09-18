@@ -17,7 +17,7 @@ class BlinkerHandler {
 
     // Set the module led as given in the parameter. Either the state of each led
     // as a boolean; or the bit-wise sum of the leds that needs to be set on; or
-    // the idx of the led to be turned on (others will be set off).
+    // the idx or color of the led to be turned on (others will be set off).
     void set(bool redVal, bool greenVal, bool blueVal, bool yellowVal);
     void set(char ledSum);
     void set(int ledIdx);
