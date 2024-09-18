@@ -64,9 +64,9 @@ class PINModule {
         2,1,4,3,    // up, up
     };
 
-    // Maps the switcch positions to blinker statuses: first three values are for first switch (down-middle-up),
+    // Maps the switch positions to blinker statuses: first three values are for first switch (down-middle-up),
     // and last three for the second switch (down-middle-up). The final blinkers are set with first + second.
-    // The values here are also the default values, but they arae changed during the runtime, if using randomized mode.
+    // The values here are also the default values, but they are changed during the runtime, if using randomized mode.
     int switches2blinkers[6] {
         0b1010,
         0b0100,
@@ -75,20 +75,6 @@ class PINModule {
         0b0010,
         0b1000,
     };
-
-    /*
-    char switches2pin2[9] {
-        0b00100111,
-        0b10000111,
-        0b01110010,
-        0b11001001,
-        0b01101100,
-        0b10110100,
-        0b11100100,
-        0b11011000,
-        0b01001110,
-    };
-    */
 
 };
 

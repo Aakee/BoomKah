@@ -46,7 +46,7 @@ class RGBHandler {
     int greenPin;
     int bluePin;
 
-    // LED color schemes (red-green--blue)
+    // LED color schemes (red,green,blue)
     int colors[24] = {10,   0,    0,      // red
                       0,    10,   0,      // green
                       0,    0,    10,     // blue

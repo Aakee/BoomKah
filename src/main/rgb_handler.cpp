@@ -50,13 +50,15 @@ void RGBHandler::set(int idx) {
 
 /*
   Sets the individual values of red, green and blue LEDs as given in parameters.
-  Acceptable values are in range 0--255.
+  Acceptable values are in range 0-255.
   Parameters:
     int redVal      Brightness of red LED
     int greenVal    Brightness of green LED
     int blueVal     Brightness of blue LED
 */
 void RGBHandler::set(int redVal, int greenVal, int blueVal) {
+  // The chosen RGB is common anode, meaning that high voltage to a rgb pin is off and low is on!
+  // Remove the "255-" part in the following if using common cathode rgb
   analogWrite(redPin,   255-redVal);
   analogWrite(greenPin, 255-greenVal);
   analogWrite(bluePin,  255-blueVal);

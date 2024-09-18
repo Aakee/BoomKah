@@ -36,7 +36,7 @@ class SimonModule {
     void setBlinkers(BlinkerHandler*);
     void setRGB(RGBHandler*);
 
-    // Randomizes the switches-blinkers-relationship if using randomized mode. (Does nothing if not using randomized mode.)
+    // Randomizes the blink sequence and rgb if using randomized mode. (Does nothing if not using randomized mode.)
     void randomizeSequence();
 
     // Defaults

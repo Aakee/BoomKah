@@ -49,7 +49,7 @@ int SwitchesModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, Blink
         }
     }
 
-    // Save the button state (whether atleas one button was pressed)
+    // Save the button state (whether at least one button was pressed)
     buttonPreviouslyPressed = buttonPressed;
 
     // Check if the module has been deactivated

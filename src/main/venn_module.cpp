@@ -26,7 +26,7 @@ VennModule::VennModule(bool r = false, bool e = false) {
     // Check whether using randomized mode or not
     if (!r) { maxSuccessCount = 3; randomize = false; }
     else { randomize = true; }
-    // Check and set asy mode
+    // Check and set easy mode
     if (e) {easymode = true;}
     // Set the blinker sequence and rgb color
     randomizeState();
@@ -67,7 +67,7 @@ int VennModule::run(SwitchStates* switchState, RGBHandler* rgbHandler, BlinkerHa
             ret = -1;
         }
 
-        // In both cases, set next  state
+        // In both cases, set next state
         randomizeState();
     }
 
@@ -161,7 +161,6 @@ void VennModule::randomizeState() {
         //Serial.println(chosenCombination);
 
         // A: None of the conditions fulfilled
-        
         if (chosenCombination == 0) {
             // Possible blinkers: Max two blinkers, no blue
             char possibleBlinkersA[7] = {0b0000, 0b0001, 0b0010, 0b1000, 0b0011, 0b1001, 0b1010};

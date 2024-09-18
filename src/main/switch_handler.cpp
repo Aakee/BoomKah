@@ -2,6 +2,7 @@
 #include "Arduino.h"
 
 /*
+  Refer to the wiring diagram for the switch and button wiring.
   Parameters:
     int b1pin         Arduino pin for button 1
     int b2pin         Arduino pin for button 2
@@ -35,14 +36,14 @@ SwitchHandler::~SwitchHandler() {
   Reads and saves the current statuses of the buttons and switches.
 */
 void SwitchHandler::read() {
-  // Read statuses of buttons
   unsigned long currentTime = millis();
 
+  // Read "real" statuses of buttons
   int pins[4] = {btn1_pin, btn2_pin, btn3_pin, btn4_pin};
   bool bufferedStates[4] = {currentStates.btn1, currentStates.btn2, currentStates.btn3, currentStates.btn4};
 
   // Buffer button statuses such that the changes are registered if the current status has persisted
-  // constantly at least a pre-determined amount of time. This is to reduce eccet of static noise
+  // constantly at least a pre-determined amount of time. This is to reduce effect of static noise
   // or annoyance of barely-closed buttons, etc.
   for (int idx=0; idx < 4; idx++) {
     bool currentState = digitalRead(pins[idx]);
@@ -57,6 +58,7 @@ void SwitchHandler::read() {
   currentStates.btn4 = bufferedStates[3];
 
   // Read and save switch positions (no buffering is needed here)
+  // Change the voltage limits and/or order of the states if needed (if the switch is wired differently from the diagram)
   int sw1pos = analogRead(swtch1_pin);
   if      (sw1pos < 250) {currentStates.swtch1 = down;}
   else if (sw1pos < 750) {currentStates.swtch1 = up;}

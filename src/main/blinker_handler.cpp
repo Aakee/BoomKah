@@ -3,6 +3,7 @@
 
 /*
 Parameters:
+  int rp        Arduino pin of red led
   int wp        Arduino pin of white led
   int bp        Arduino pin of blue led
   int yp        Arduino pin of yellow led
@@ -50,7 +51,7 @@ void BlinkerHandler::set(bool redVal, bool greenVal, bool blueVal, bool yellowVa
   Sets the blinker LEDs according to the bits given as the parameter.
   The state of each LED is taken as a bit of the given parameter: the least significant bit
   denotes red, second green, third blue, and fourth lsb yellow LED.
-  E.g. 0x0011 sets red andgreen LEDs on and blue and yellow LEDs off.
+  E.g. 0x0011 sets red and green LEDs on and blue and yellow LEDs off.
   Parameters:
     char ledSum     Bits for the LEDs to be turned on or off
 */
@@ -66,7 +67,7 @@ void BlinkerHandler::set(char ledSum) {
 
 
 /*
-  Sets the blinker LEDs according to the color given as the parameter.
+  Sets the blinker LEDs according to the color given as the parameter. Other leds will be turned off.
   Parameters:
     Color c     Color of the LED to be turned off; set other LED's off
 */
