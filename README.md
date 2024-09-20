@@ -1,16 +1,25 @@
 # Boom Kah
-A Keep Talking and Nobody Explodes -inspired game with Arduino hardware!
+A *Keep Talking and Nobody Explodes* -inspired game with Arduino hardware
 
 ## Overview
 
-Boom kah is a game for two players. The objective is to co-operatively defuse a bomb, using a bomb defusal guide and the information given by the bomb.
+Boom Kah is a game for two players. The objective is to co-operatively defuse a bomb, using a bomb defusal guide and the information given by the bomb.
 
-The first player is a bomb defusal Expert. **The good news:** they have in hand all the information needed to defuse the bomb, in the form of a detailed bomb defusal guide. **The bad news:** they cannot actually handle nor see the bomb. That part is handled by the second player, a total Novice to bombs who just happened to be in the wrong place in the wrong time (i.e. in a room with a bomb). 
+The first player is a bomb defusal Expert. **The good news:** they have in hand all the information needed to defuse the bomb, in the form of a detailed Bomb Defusal Guide. **The bad news:** the bomb is not handled by them but by the second player, a total Novice to bombs, who just happened to be in the wrong place in the wrong time (i.e. in a room with a bomb). 
 
-Using voice as their only form of communication, the two persons must communicate their way defusing the bomb modules in the process.
+Using voice as their only form of communication, the two players must communicate their through the bomb's modules, and hopefully not exploding in the process.
 
 
-## The Bomb
+## Playing the game
+
+### Defusal manual
+
+Fear not, as the Expert has the access to the extensive Bomb Defusal Guide! The Guide is found in /docs. For Expert eyes only -- the Novice is not allowed to see the manual while playing the game!
+
+The Guide is only in Finnish for now.
+
+
+### The Bomb
 
 Below is a schematic figure and a photo of The Bomb.
 
@@ -25,21 +34,14 @@ The Bomb won't accept new commands while the feedback light is red. Initially, t
 
 ### Defusing The Bomb
 
-The bomb is defused once all the modules have been deactivated. To mark this, the bomb plays a triple beeping sound, and the feedback light is turned green. Phew!
+The modules must be deactivated one by one. The bomb is defused once all the modules have been deactivated. To mark this, the bomb plays a triple beeping sound, and the feedback light is turned green. Phew!
 
-### Exploding The Bomb...?!?
+### Detonating The Bomb...?!?
 
-As it is now, The Bomb does not actually explode (nor even simulate it!). The goal of the players is to defuse the bomb as quickly as possible, but there is no maximum time, nor does the bomb explode even if incorrect inputs are given to the bomb.
+As it is now, The Bomb does not actually explode (nor even simulate it). The goal of the players is to defuse the bomb as quickly as possible, but there is no maximum time, nor does the bomb explode even if incorrect inputs are given to the bomb. 
 
+(But the players can give themselves some house rules, e.g. maximum time is 5 minutes, and the bomb explodes immediately after one incorrect input. Or they can experiment with the bomb and its modules and take all the time they need. Whatever suits the players best!)
 
-
-## Defusal manual
-
-Fear not, as the Expert has the access to the extensive Bomb Defusal Guide!
-
-The Guide is found in /docs. For Expert eyes only -- the Novice is not allowed to see the manual while playing the game!
-
-For now, the Guide is only in Finnish.
 
 
 ## Software and hardware
