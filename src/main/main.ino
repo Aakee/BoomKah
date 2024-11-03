@@ -23,8 +23,9 @@
 
 
 // false --> always the same answers. true --> randomizes the proceedings
-const bool RANDOMIZE = false;
+const bool RANDOMIZE = true;
 
+// Enables 'easy mode' on some modules
 const bool EASYMODE = true;
 
 // Define pins for actuators
@@ -64,9 +65,12 @@ const int SWTCH1     = A4;
 const int SWTCH2     = A5;
 
 
-// Setup function (nothing here at the moment)
+// Setup function
 void setup() {
   //Serial.begin(9600);
+
+  // Randomize the seed from an unconnected analog read pin
+  randomSeed(analogRead(A6));
 }
 
 
