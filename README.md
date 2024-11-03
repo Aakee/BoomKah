@@ -1,11 +1,15 @@
 # Boom Kah
-A *Keep Talking and Nobody Explodes* -inspired game with Arduino hardware
+A *Keep Talking and Nobody Explodes* -inspired game with Arduino hardware.
+
+Originally made for Hupsis-Punkku 2024 scouting competition.
 
 ## Overview
 
+![Bomb picture](/bomb_picture.jpg)
+
 Boom Kah is a game for two players. The objective is to co-operatively defuse a bomb, using a bomb defusal guide and the information given by the bomb.
 
-The first player is a bomb defusal Expert. **The good news:** they have in hand all the information needed to defuse the bomb, in the form of a detailed Bomb Defusal Guide. **The bad news:** the bomb is not handled by them but by the second player, a total Novice to bombs, who just happened to be in the wrong place in the wrong time (i.e. in a room with a bomb). 
+The first player is a bomb defusal _Expert_. **The good news:** they have in hand all the information needed to defuse the bomb, in the form of a detailed Bomb Defusal Guide. **The bad news:** the bomb is not handled by them but by the second player, a total _Novice_ to bombs, who just happened to be in the wrong place in the wrong time (i.e. in a room with a bomb). 
 
 Using voice as their only form of communication, the two players must communicate their through the bomb's modules, and hopefully not exploding in the process.
 
@@ -14,7 +18,7 @@ Using voice as their only form of communication, the two players must communicat
 
 ### Defusal manual
 
-Fear not, as the Expert has the access to the extensive Bomb Defusal Guide! The Guide is found in /docs. For Expert eyes only -- the Novice is not allowed to see the manual while playing the game!
+Fear not, as the Expert has the access to the extensive Bomb Defusal Guide! The Guide is found in /docs, or [here](/docs/Pomminpurkuohjeet.pdf). For Expert eyes only -- the Novice is not allowed to see the manual while playing the game!
 
 The Guide is only in Finnish for now.
 
@@ -22,6 +26,8 @@ The Guide is only in Finnish for now.
 ### The Bomb
 
 Below is a schematic figure and a photo of The Bomb.
+
+![Bomb schematics](/bomb_schematics.drawio.png)
 
 The Bomb has four modules, each with their own set of deactivation rules. The current module to be deactivated can be determined by the **module lights**.
 
@@ -54,3 +60,7 @@ List of the electrical components and schematics of the electorics can be found 
 ## Credits
 
 Akseli Konttas 2024
+
+## Licence
+
+MIT License, included in this repository
